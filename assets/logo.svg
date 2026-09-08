@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="HCSC placeholder mark">
-  <!-- PLACEHOLDER. Replace this file with the official Harvard Club Sports shield
-       supplied by the Club Sports Office (keep the filename logo.svg, or change
-       the src in assets/site.js). -->
-  <rect x="2" y="2" width="60" height="60" rx="10" fill="#a51c30"/>
-  <text x="32" y="41" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, Arial, sans-serif" font-weight="700" font-size="21" fill="#ffffff" letter-spacing="0.5">HCSC</text>
-</svg>
