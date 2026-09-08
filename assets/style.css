@@ -117,7 +117,6 @@ p { margin: 0 0 1rem; }
 .nav-group.open .nav-menu, .nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { display: block; }
 .nav-menu a { display: flex; align-items: center; gap: .6rem; padding: .6rem .75rem; border-radius: 4px; white-space: nowrap; }
 .nav-menu a[aria-current="page"] { box-shadow: none; background: var(--ink-2); border-radius: 4px; }
-.nav-menu .dot { width: .6rem; height: .6rem; border-radius: 50%; background: var(--b, #888); flex: none; box-shadow: 0 0 0 1.5px rgba(255,255,255,.45); }
 .nav-menu .all { border-top: 1px solid #3a3a40; margin-top: .3rem; padding-top: .7rem; color: #f0c9d0; font-size: .9rem; }
 
 .nav-toggle {

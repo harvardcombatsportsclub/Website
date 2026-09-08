@@ -52,7 +52,7 @@
     const sportsMenu = `<div class="nav-group ${onBranchPage ? "current" : ""}">
         <button class="nav-drop" aria-expanded="false" aria-haspopup="true" aria-controls="sports-menu">Sports <span class="chev" aria-hidden="true">▾</span></button>
         <div class="nav-menu" id="sports-menu" role="menu">
-          ${BRANCHES.map(b => `<a role="menuitem" href="${b.page}" ${b.page === cur ? 'aria-current="page"' : ""}><span class="dot" style="--b:${b.color || "#2a2a2e"}"></span>${escapeHtml(b.nav || b.short)}</a>`).join("")}
+          ${BRANCHES.map(b => `<a role="menuitem" href="${b.page}" ${b.page === cur ? 'aria-current="page"' : ""}>${escapeHtml(b.nav || b.short)}</a>`).join("")}
           <a role="menuitem" class="all" href="schedule.html">All practice times →</a>
         </div>
       </div>`;
