@@ -2,7 +2,11 @@
 
 Static site for HCSC (Brazilian Jiu-Jitsu + Women's Wrestling). No build step, no framework: plain HTML/CSS/JS, hosted on GitHub Pages behind Cloudflare DNS. Anyone on the e-board with GitHub access can update it from a browser.
 
-## Editing content (no coding needed)
+## How content works
+
+Officers use the **Site Editor** at `/admin.html`: forms for the schedule, cancellations/announcements, leadership, disciplines, club info, photos, and the logo. It authenticates with a club password against a small **Cloudflare Worker** (`worker/worker.js`) which holds a GitHub token and commits to this repo on the editor's behalf; the Worker whitelists exactly which paths may be read/written/deleted (see the top of the file). Setup: `worker/README.md`. Photos can also be dragged into `photos/` on github.com. Plain-English officer guide: `GUIDE.md` (served at `/guide.html`). First-time setup: `SETUP.md`.
+
+## Editing the JSON directly (what the editor writes)
 
 | To change…                      | Edit this file                          |
 |---------------------------------|-----------------------------------------|
@@ -14,7 +18,7 @@ Static site for HCSC (Brazilian Jiu-Jitsu + Women's Wrestling). No build step, n
 | FAQ questions                   | `faq.html` (copy an existing `<details>` block)     |
 | Page text                       | The matching `.html` file               |
 | Colors / fonts                  | The `:root` tokens at the top of `assets/style.css` |
-| Logo                            | Drop the official Club Sports shield in `assets/` and point `"logo"` in `data/site.json` at it (e.g. `assets/shield.png`). Also update the `<link rel="icon">` in each page if you want it as the favicon. |
+| Logo                            | Site Editor → Club info → Replace logo (writes `assets/shield.png` and sets `"logo"` in `data/site.json`). Update the `<link rel="icon">` in each page if you want it as the favicon. |
 
 On github.com: open the file → pencil icon → edit → **Commit changes**. GitHub Pages redeploys in about a minute.
 

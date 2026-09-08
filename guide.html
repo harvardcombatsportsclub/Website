@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Officer's Guide — Harvard Combat Sports Club website</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/shield.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <style>
+    .doc { max-width: 780px; padding-bottom: 5rem; }
+    .doc h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin-top: 2.5rem; }
+    .doc h2 { font-size: 1.7rem; margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .doc h3 { font-size: 1.2rem; text-transform: none; letter-spacing: 0; margin-top: 1.5rem; }
+    .doc p, .doc li { line-height: 1.7; }
+    .doc ol, .doc ul { padding-left: 1.4rem; }
+    .doc li { margin-bottom: .5rem; }
+    .doc code { background: var(--paper-2); padding: .1rem .35rem; border-radius: 3px; font-size: .9em; overflow-wrap: anywhere; }
+    .doc strong { color: var(--ink); }
+    .toc { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.5rem; margin: 1.5rem 0 2rem; }
+    .toc h4 { margin-bottom: .5rem; }
+    .toc ol { margin: 0; columns: 2; column-gap: 2rem; }
+    @media (max-width: 640px) { .toc ol { columns: 1; } }
+    .toc li { margin-bottom: .25rem; break-inside: avoid; }
+    .topbar { background: var(--ink); color: var(--white); border-bottom: 3px solid var(--crimson); }
+    .topbar .wrap { display: flex; justify-content: space-between; align-items: center; min-height: 60px; gap: 1rem; flex-wrap: wrap; }
+    .topbar a { color: #f0c9d0; }
+    .topbar .t { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .05em; font-weight: 700; font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+  <div class="topbar"><div class="wrap"><span class="t">HCSC · Officer's Guide</span><span><a href="admin.html">Open the Site Editor</a> &nbsp;·&nbsp; <a href="index.html">Live site</a></span></div></div>
+  <main class="wrap doc">
+    <h1 id="hcsc-website-the-officers-guide">HCSC Website: The Officer's Guide</h1>
+    <nav class="toc"><h4>Contents</h4><ol><li><a href="#1-the-big-picture-read-this-once">1. The big picture (read this once)</a></li><li><a href="#2-what-you-need">2. What you need</a></li><li><a href="#3-opening-the-editor">3. Opening the editor</a></li><li><a href="#4-cancelling-a-practice-or-posting-a-notice">4. Cancelling a practice or posting a notice</a></li><li><a href="#5-photos">5. Photos</a></li><li><a href="#6-start-of-semester-checklist-15-minutes">6. Start-of-semester checklist (15 minutes)</a></li><li><a href="#7-editing-page-wording-on-github">7. Editing page wording on GitHub</a></li><li><a href="#8-adding-a-new-discipline-muay-thai-mma">8. Adding a new discipline (Muay Thai, MMA, …)</a></li><li><a href="#9-the-shield-the-name-and-harvards-rules">9. The shield, the name, and Harvard's rules</a></li><li><a href="#10-when-something-looks-wrong">10. When something looks wrong</a></li><li><a href="#11-passing-it-on">11. Passing it on</a></li><li><a href="#appendix-first-time-setup">Appendix: first-time setup</a></li></ol></nav>
+    
+<p>This guide assumes you have never touched a website before. If you can fill in a form, you can run this site.</p>
+<h2 id="1-the-big-picture-read-this-once">1. The big picture (read this once)</h2>
+<p>The club website has a built-in <strong>Site Editor</strong>. You open it in your browser, type the club password, and change things with normal forms: pick a day, type a time, upload a photo, click Save. About a minute later the live site shows the change. There is nothing to install and no account to create; the only thing you need is the club password.</p>
+<p>Behind the scenes the website's files live on <strong>GitHub</strong>, a free service that stores files and shows them to the internet, and the editor talks to a tiny helper program on <strong>Cloudflare</strong> that holds the key to those files. You never need to think about either of them. The only time anyone opens GitHub is to change the <em>wording</em> of a page (the FAQ text, the paragraphs on the Jiu-Jitsu page); section 7 covers it.</p>
+<p>So the three jobs, in order of how often you'll do them:</p>
+<ol>
+<li><strong>Cancel a practice or post a notice</strong> (weekly-ish): Editor → <em>This week</em> tab.</li>
+<li><strong>Add photos</strong> (whenever): Editor → <em>Photos</em> tab.</li>
+<li><strong>Update the schedule and e-board</strong> (each semester): Editor → <em>Weekly schedule</em> and <em>Leadership</em> tabs.</li>
+</ol>
+<h2 id="2-what-you-need">2. What you need</h2>
+<ul>
+<li><strong>The club password.</strong> Ask the president. It changes at each hand-off.</li>
+<li><strong>The website address</strong>, e.g. <code>https://harvardcombatsports.github.io/website/</code>, or the custom domain if we have one.</li>
+<li>For the rare page-wording edits only: the club GitHub login.</li>
+</ul>
+<h2 id="3-opening-the-editor">3. Opening the editor</h2>
+<p>Go to the website and click <strong>Officers</strong> at the very bottom of any page, or go straight to <code>your-site-address/admin.html</code>. Type the club password. Tick <strong>Remember me</strong> on your own laptop or phone so you don't have to type it again; don't tick it on a shared computer. Use <strong>Log out</strong> (top right) on a shared machine when you're done.</p>
+<p>The editor has six tabs. Every tab has a <strong>Save to website</strong> button; nothing changes on the live site until you click it. A small gold dot next to it means you have unsaved changes. If you try to close the page with unsaved changes, the browser will warn you.</p>
+<h2 id="4-cancelling-a-practice-or-posting-a-notice">4. Cancelling a practice or posting a notice</h2>
+<p><strong>This week</strong> tab.</p>
+<p><em>Banner.</em> Type your message in the box (e.g. "No practice Thursday: tournament weekend"), pick the last date it should show, click <strong>Save to website</strong>. A gold banner appears at the top of the Home and Schedule pages and disappears by itself the day after that date. To remove a banner early, clear the text and save.</p>
+<p><em>Cancel a practice.</em> Click <strong>+ Cancel a practice</strong>, pick the date, choose which discipline (or "All practices that day"), add a short note if you like, <strong>Save</strong>. On the site that practice is crossed out in the week view and "Next practice" skips it. Old cancellations don't hurt anything; remove them whenever you feel like tidying.</p>
+<p>For anything people might actually miss, do both: cancel the practice <em>and</em> post a banner. Then send it in WhatsApp too. The website is the reference; WhatsApp is the alarm.</p>
+<h2 id="5-photos">5. Photos</h2>
+<p><strong>Photos</strong> tab.</p>
+<p><em>Add photos.</em> Click <strong>Choose photos</strong>, select as many as you like, click <strong>Upload</strong>. Large phone photos are shrunk automatically, so don't worry about size. A progress bar shows each one going up. About a minute after the upload finishes, the public Photos page shows them, newest first, without captions.</p>
+<p><em>Delete a photo.</em> Scroll down to <strong>In the gallery</strong>, hover over the photo, click <strong>Delete</strong>, confirm.</p>
+<p><em>Headshots</em> for the Leadership page: choose the file, pick the person from the dropdown, click <strong>Upload headshot</strong>. The editor fills in the person's headshot path on the Leadership tab for you; go there and click Save.</p>
+<p>Two rules: only upload photos of people who are fine appearing on a public website, and nothing you wouldn't want the Club Sports Office to see.</p>
+<p><em>iPhone HEIC photos:</em> Safari uploads them fine. In Chrome or on Windows they may fail; either use Safari, export as JPG first, or set Settings → Camera → Formats → <em>Most Compatible</em> so your phone shoots JPG.</p>
+<h2 id="6-start-of-semester-checklist-15-minutes">6. Start-of-semester checklist (15 minutes)</h2>
+<ol>
+<li><strong>Weekly schedule tab:</strong> change the <em>Term</em> (e.g. "Spring 2027"). Fix days, times, and rooms; use <strong>+ Add a practice</strong> and <strong>✕ Remove</strong>. Times must look like <code>5:30 PM</code>. If a practice moves to a new building, add it under <em>Locations</em> first (short code like <code>MAC</code>, full name, room, address, Google Maps link). Save.</li>
+<li><strong>This week tab:</strong> delete last semester's cancellations. If the first practice isn't on the usual day, cancel the ones that aren't happening and post a banner saying when things start. Save.</li>
+<li><strong>Leadership tab:</strong> update officers, roles, class years; remove graduated officers; update coaches. Save.</li>
+<li><strong>Club info tab:</strong> check the email, WhatsApp link, and dues. If the WhatsApp community link was reset, paste the new one here; every button on the site updates. Save.</li>
+<li>Open the live site on your phone and click through every page.</li>
+</ol>
+<h2 id="7-editing-page-wording-on-github">7. Editing page wording on GitHub</h2>
+<p>For text that isn't a form field (FAQ answers, the story on the About page, paragraphs on a discipline page):</p>
+<ol>
+<li>Go to github.com, sign in as the club, open the <code>website</code> repository.</li>
+<li>Click the file, e.g. <code>faq.html</code>. Click the <strong>pencil icon</strong> (top right of the file view).</li>
+<li>Find the text (Ctrl/Cmd-F helps). Change only the words between <code>&gt;</code> and <code>&lt;</code>; everything inside angle brackets is code that tells the browser how to display the words. In <code>&lt;p&gt;Dues start at $20.&lt;/p&gt;</code>, change <code>$20</code>, not <code>&lt;p&gt;</code>.</li>
+<li>Click <strong>Commit changes</strong>, then <strong>Commit changes</strong> again in the popup. The site updates within a minute.</li>
+</ol>
+<p>To add an FAQ question, copy an existing block from <code>&lt;details&gt;</code> to <code>&lt;/details&gt;</code>, paste it below, and change the question and answer.</p>
+<p>If you make a mess: GitHub keeps every version. Click <strong>History</strong> (the clock icon) on the file, open the last good version, click <strong>⋯ → View file</strong>, then the pencil, and copy the content back.</p>
+<h2 id="8-adding-a-new-discipline-muay-thai-mma">8. Adding a new discipline (Muay Thai, MMA, …)</h2>
+<p><strong>Disciplines</strong> tab in the editor. Click <strong>+ Add a discipline</strong> and fill in the full Name, a Short name (what the schedule shows), a Nav label (what the menu shows), an ID (lowercase with dashes, <code>muay-thai</code>; never change it later), the Page file (<code>muay-thai.html</code>), Who can join, an Instagram handle if it has one, a Color (click the swatch), and a one-line Description for the home-page card. Leave <strong>Active</strong> unticked for now.</p>
+<p>Click <strong>Create page from template</strong> next to it. This creates the discipline's page with placeholder text in [BRACKETS]. Click <strong>Save to website</strong>.</p>
+<p>Now write the page: on GitHub (section 7) open <code>muay-thai.html</code> and replace each [BRACKETED] bit with real text about the sport. Then back in the editor tick <strong>Active</strong>, save, and add its practices on the <em>Weekly schedule</em> tab (the new discipline is now in the dropdown). The menu, home page, footer, and schedule colors pick it up automatically.</p>
+<p>There's already a hidden Muay Thai entry to use as a starting point.</p>
+<h2 id="9-the-shield-the-name-and-harvards-rules">9. The shield, the name, and Harvard's rules</h2>
+<p>The site must make clear we're a <em>student</em> organization. The footer on every page already says so and includes Harvard's trademark line. Don't remove it. Other rules from the Trademark Program and the Club Sports Office:</p>
+<ul>
+<li>No ads or "sponsored by" logos on the site. If a sponsor deal happens, ask the Club Sports Office how it may be shown.</li>
+<li>No selling Harvard-branded merch through the site without Trademark Program approval; an order form is fine.</li>
+<li>Use only the official Club Sports shield as the logo. To install it: <strong>Club info</strong> tab → <em>Replace logo</em> → choose the file → <strong>Upload logo</strong> → <strong>Save to website</strong>.</li>
+<li>If we ever buy a domain with "harvard" in it, clear it with the Club Sports Office first.</li>
+</ul>
+<h2 id="10-when-something-looks-wrong">10. When something looks wrong</h2>
+<p><strong>"Wrong password."</strong> Ask the president for the current one; it changes at hand-off.</p>
+<p><strong>"Can't reach the editor backend."</strong> The Cloudflare helper is unreachable or not set up. Check <code>worker/README.md</code> in the repository, or ask whoever set the site up. Editing directly on GitHub still works meanwhile (section 7 shows how; the data files are in the <code>data</code> folder).</p>
+<p><strong>I saved but the site didn't change.</strong> Wait two minutes and hard-refresh (Ctrl/Cmd-Shift-R). If it's still old, open the file on GitHub (<code>data/schedule.json</code>, etc.) and see whether your change is there. If yes, it's just caching; if no, the save failed and the editor will have shown a red message.</p>
+<p><strong>"This file changed since you loaded it."</strong> Two officers edited at once. The editor reloads the latest; redo your change and save again.</p>
+<p><strong>Photos uploaded but the public gallery is empty.</strong> The automatic gallery rebuild needs permission. On GitHub: <strong>Settings → Actions → General → Workflow permissions → Read and write permissions → Save</strong>. Upload one more photo to trigger it. Runs are visible under the <strong>Actions</strong> tab.</p>
+<p><strong>A page shows [BRACKETS].</strong> Someone created a discipline page but hasn't written its text yet. Section 8.</p>
+<p><strong>Times look wrong.</strong> They must be written like <code>5:30 PM</code> or <code>12:00 PM</code>, with a space before AM/PM. The editor refuses to save anything else.</p>
+<h2 id="11-passing-it-on">11. Passing it on</h2>
+<p>Before you graduate or step down: change the club password (Cloudflare → Workers &amp; Pages → <code>hcsc-editor</code> → Settings → Variables and Secrets → <code>ADMIN_PASSWORD</code>; two minutes, steps in <code>worker/README.md</code>), tell the new e-board the new one, make sure two current officers can log in to the club GitHub and Cloudflare accounts, and send them this guide. Sections 3 through 6 are all most officers ever need.</p>
+<h2 id="appendix-first-time-setup">Appendix: first-time setup</h2>
+<p>If the site or the editor isn't live yet, the one-time technical steps are in <code>SETUP.md</code> (GitHub Pages, the Cloudflare helper, a custom domain). That's a job for whoever is most comfortable with computers; everything in this guide applies after it's done.</p>
+  </main>
+</body>
+</html>

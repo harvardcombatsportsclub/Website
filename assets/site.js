@@ -106,7 +106,7 @@
         </div>
         <div class="disclaimer">
           <p><strong>${site.name}</strong> is an officially recognized student organization of Harvard College and a student-run club sport. Our activities are student activities and not activities of Harvard College or Harvard University. The Harvard name and shield are trademarks of the President and Fellows of Harvard College and are used by permission of Harvard University.</p>
-          <p>&copy; ${year} ${site.name}</p>
+          <p>&copy; ${year} ${site.name} · <a href="admin.html">Officers</a></p>
         </div>
       </div>`;
     document.body.append(footer);
@@ -326,18 +326,18 @@
     if (!photos.length) {
       grid.outerHTML = `<div class="gallery-empty" id="gallery">
         <p><strong>No photos yet.</strong></p>
-        <p class="small">Officers: upload images to the <code>photos/</code> folder in the GitHub repo and this gallery fills in automatically.</p>
+        <p class="small">Officers: add photos in the Site Editor and they appear here automatically.</p>
       </div>`;
       return;
     }
     grid.innerHTML = photos.map((p, i) => `
-      <a href="${p.full}" data-index="${i}" aria-label="${p.caption || "Club photo"}">
-        <img src="${p.thumb || p.full}" alt="${p.caption || ""}" loading="lazy" width="${p.w || ""}" height="${p.h || ""}">
+      <a href="${p.full}" data-index="${i}" aria-label="Photo ${i + 1} of ${photos.length}">
+        <img src="${p.thumb || p.full}" alt="" loading="lazy" width="${p.w || ""}" height="${p.h || ""}">
       </a>`).join("");
 
     // Lightbox
     const lb = document.createElement("div");
-    lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true");
+    lb.className = "lightbox"; lb.setAttribute("role", "dialog"); lb.setAttribute("aria-modal", "true"); lb.setAttribute("aria-label", "Photo viewer");
     lb.innerHTML = `<button class="close" aria-label="Close">×</button>
       <button class="prev" aria-label="Previous">‹</button>
       <img alt="">
@@ -348,15 +348,12 @@
     let idx = 0;
     const show = i => {
       idx = (i + photos.length) % photos.length;
-      img.src = photos[idx].full; img.alt = photos[idx].caption || "";
-      cap.textContent = photos[idx].caption || "";
+      img.src = photos[idx].full;
+      cap.textContent = `${idx + 1} / ${photos.length}`;
       lb.classList.add("open");
     };
     const hide = () => lb.classList.remove("open");
-    grid.addEventListener("click", e => {
-      const a = e.target.closest("a"); if (!a) return;
-      e.preventDefault(); show(+a.dataset.index);
-    });
+    grid.addEventListener("click", e => { const a = e.target.closest("a"); if (!a) return; e.preventDefault(); show(+a.dataset.index); });
     lb.querySelector(".close").addEventListener("click", hide);
     lb.querySelector(".prev").addEventListener("click", () => show(idx - 1));
     lb.querySelector(".next").addEventListener("click", () => show(idx + 1));
@@ -379,7 +376,7 @@
       site = await loadJSON("data/site.json");
     } catch (e) {
       console.error(e);
-      site = { name: "Harvard Combat Sports Club", short: "HCSC", email: "", whatsapp: "#", instagram: { jiujitsu: "", wrestling: "" } };
+      site = { name: "Harvard Combat Sports Club", short: "HCSC", email: "", whatsapp: "#" };
     }
     try {
       const br = await loadJSON("data/branches.json");

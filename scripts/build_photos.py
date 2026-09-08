@@ -7,9 +7,7 @@ to the photos/ folder. You can also run it locally:
     pip install pillow
     python scripts/build_photos.py
 
-Captions: optionally create photos/captions.txt with one line per image:
-    2026-09-fall-open-mat.jpg | First open mat of the semester
-Anything without a caption gets a caption derived from its filename.
+The gallery shows photos without captions.
 """
 from __future__ import annotations
 
@@ -33,28 +31,8 @@ THUMB_SIZE = 600      # px, longest side of the square-cropped thumbnail
 FULL_MAX = 2000       # px, longest side; larger originals are downscaled in place
 
 
-def load_captions() -> dict[str, str]:
-    f = PHOTOS / "captions.txt"
-    caps: dict[str, str] = {}
-    if f.exists():
-        for line in f.read_text(encoding="utf-8").splitlines():
-            if "|" in line:
-                name, cap = line.split("|", 1)
-                caps[name.strip()] = cap.strip()
-    return caps
-
-
-def caption_from_name(name: str) -> str:
-    stem = Path(name).stem
-    stem = re.sub(r"^\d{4}[-_]\d{2}([-_]\d{2})?[-_]?", "", stem)  # strip leading date
-    stem = re.sub(r"^(IMG|DSC|PXL|Screenshot)[_-]?\d*", "", stem, flags=re.I)
-    words = re.sub(r"[-_]+", " ", stem).strip()
-    return words[:1].upper() + words[1:] if words else ""
-
-
 def main() -> None:
     THUMBS.mkdir(parents=True, exist_ok=True)
-    captions = load_captions()
     files = sorted(
         (p for p in PHOTOS.iterdir() if p.is_file() and p.suffix.lower() in EXTS),
         key=lambda p: p.name.lower(),
@@ -80,7 +58,6 @@ def main() -> None:
             "full": f"photos/{p.name}",
             "thumb": f"photos/thumbs/{tpath.name}",
             "w": w, "h": h,
-            "caption": captions.get(p.name, caption_from_name(p.name)),
         })
 
     # Remove orphaned thumbnails
