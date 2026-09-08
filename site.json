@@ -1,0 +1,14 @@
+{
+  "name": "Harvard Combat Sports Club",
+  "short": "HCSC",
+  "email": "harvardcombatsportsclub@gmail.com",
+  "whatsapp": "https://chat.whatsapp.com/GN4eHRUghdRCVK8RrTq9mE",
+  "dues": {
+    "base": 20,
+    "note": "Dues start at $20 per semester and increase if you'd like a uniform or merchandise. Financial aid is available for undergraduates."
+  },
+  "_help": "Club-wide settings. 'editor' = the URL of the club's Cloudflare Worker (e.g. https://hcsc-editor.<account>.workers.dev); admin.html uses it to save changes. Leave empty until the Worker is set up.",
+  "tagline": "Brazilian Jiu-Jitsu, Women's Wrestling, and more at Harvard. All experience levels welcome.",
+  "logo": "assets/shield.png",
+  "editor": "https://hcsc-editor.harvardcombatsportsclub.workers.dev"
+}
