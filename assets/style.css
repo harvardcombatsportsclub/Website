@@ -98,6 +98,28 @@ p { margin: 0 0 1rem; }
 }
 .nav .cta:hover { background: var(--crimson-dark); }
 
+/* Sports dropdown */
+.nav-group { position: relative; }
+.nav-drop {
+  background: none; border: 0; color: #e8e8ec; font: inherit; font-weight: 500; font-size: .95rem; white-space: nowrap;
+  padding: .5rem .7rem; border-radius: var(--radius); cursor: pointer; display: inline-flex; align-items: center; gap: .3rem;
+}
+.nav-drop .chev { font-size: .8em; transition: transform .15s; }
+.nav-drop:hover, .nav-group.open .nav-drop { background: var(--ink-2); color: var(--white); }
+.nav-group.current .nav-drop { color: var(--white); box-shadow: inset 0 -3px 0 var(--crimson); border-radius: 0; }
+.nav-group.open .nav-drop .chev { transform: rotate(180deg); }
+.nav-menu {
+  display: none; position: absolute; top: calc(100% + 6px); left: 0; min-width: 220px;
+  background: var(--ink); border: 1px solid #3a3a40; border-top: 3px solid var(--crimson); border-radius: 0 0 var(--radius) var(--radius);
+  padding: .4rem; box-shadow: 0 12px 30px rgba(0,0,0,.35); z-index: 60;
+}
+.nav-menu::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 10px; } /* hover bridge */
+.nav-group.open .nav-menu, .nav-group:hover .nav-menu, .nav-group:focus-within .nav-menu { display: block; }
+.nav-menu a { display: flex; align-items: center; gap: .6rem; padding: .6rem .75rem; border-radius: 4px; white-space: nowrap; }
+.nav-menu a[aria-current="page"] { box-shadow: none; background: var(--ink-2); border-radius: 4px; }
+.nav-menu .dot { width: .6rem; height: .6rem; border-radius: 50%; background: var(--b, #888); flex: none; box-shadow: 0 0 0 1.5px rgba(255,255,255,.45); }
+.nav-menu .all { border-top: 1px solid #3a3a40; margin-top: .3rem; padding-top: .7rem; color: #f0c9d0; font-size: .9rem; }
+
 .nav-toggle {
   display: none; background: none; border: 1px solid #55555c; color: var(--white);
   padding: .45rem .7rem; border-radius: var(--radius); font: inherit; cursor: pointer;
@@ -117,6 +139,15 @@ p { margin: 0 0 1rem; }
   .nav a { padding: .8rem .75rem; border-radius: 0; border-bottom: 1px solid var(--ink-2); }
   .nav a[aria-current="page"] { box-shadow: inset 4px 0 0 var(--crimson); }
   .nav .cta { margin: .75rem 0 0; text-align: center; border-radius: var(--radius); border: 0; }
+  /* Sports group becomes an inline heading + indented links */
+  .nav-group { position: static; }
+  .nav-drop { display: block; width: 100%; text-align: left; padding: .8rem .75rem; border-radius: 0; border-bottom: 1px solid var(--ink-2); color: #9a9aa2; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; cursor: default; }
+  .nav-drop .chev, .nav-menu .all { display: none; }
+  .nav-drop:hover, .nav-group.open .nav-drop, .nav-group.current .nav-drop { background: none; box-shadow: none; color: #9a9aa2; }
+  .nav-menu { display: block; position: static; min-width: 0; background: none; border: 0; padding: 0; box-shadow: none; }
+  .nav-menu::before { display: none; }
+  .nav-menu a { padding: .8rem .75rem .8rem 1.5rem; border-radius: 0; border-bottom: 1px solid var(--ink-2); }
+  .nav-menu a[aria-current="page"] { background: none; box-shadow: inset 4px 0 0 var(--crimson); }
   .brand-text .brand-name { font-size: 1.1rem; }
 }
 

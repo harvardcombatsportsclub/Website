@@ -47,10 +47,16 @@
   /* ---------------- Header & footer ---------------- */
   function renderHeader(site) {
     const cur = currentFile();
-    const pages = NAV.flatMap(p => p === "BRANCHES" ? BRANCHES.map(b => ({ href: b.page, label: b.nav || b.short })) : [p]);
-    const links = pages.map(p =>
-      `<a href="${p.href}" ${p.cta ? 'class="cta"' : ""} ${p.href === cur ? 'aria-current="page"' : ""}>${p.label}</a>`
-    ).join("");
+    const link = p => `<a href="${p.href}" ${p.cta ? 'class="cta"' : ""} ${p.href === cur ? 'aria-current="page"' : ""}>${p.label}</a>`;
+    const onBranchPage = BRANCHES.some(b => b.page === cur);
+    const sportsMenu = `<div class="nav-group ${onBranchPage ? "current" : ""}">
+        <button class="nav-drop" aria-expanded="false" aria-haspopup="true" aria-controls="sports-menu">Sports <span class="chev" aria-hidden="true">▾</span></button>
+        <div class="nav-menu" id="sports-menu" role="menu">
+          ${BRANCHES.map(b => `<a role="menuitem" href="${b.page}" ${b.page === cur ? 'aria-current="page"' : ""}><span class="dot" style="--b:${b.color || "#2a2a2e"}"></span>${escapeHtml(b.nav || b.short)}</a>`).join("")}
+          <a role="menuitem" class="all" href="schedule.html">All practice times →</a>
+        </div>
+      </div>`;
+    const links = NAV.map(p => p === "BRANCHES" ? sportsMenu : link(p)).join("");
 
     const header = document.createElement("header");
     header.className = "site-header";
@@ -74,6 +80,16 @@
       const open = nav.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(open));
     });
+
+    // Sports dropdown: click/tap toggles; hover opens on desktop via CSS; Esc/outside click closes
+    const group = header.querySelector(".nav-group"), drop = header.querySelector(".nav-drop");
+    if (group && drop) {
+      const setOpen = v => { group.classList.toggle("open", v); drop.setAttribute("aria-expanded", String(v)); };
+      drop.addEventListener("click", e => { e.preventDefault(); setOpen(!group.classList.contains("open")); });
+      document.addEventListener("click", e => { if (!group.contains(e.target)) setOpen(false); });
+      document.addEventListener("keydown", e => { if (e.key === "Escape") { setOpen(false); drop.blur(); } });
+      group.addEventListener("focusout", e => { if (!group.contains(e.relatedTarget)) setOpen(false); });
+    }
   }
 
   function renderFooter(site) {
