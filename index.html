@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Harvard Combat Sports Club</title>
+  <meta name="description" content="The Harvard Combat Sports Club (HCSC) is Harvard's student-run home for combat sports, including Brazilian Jiu-Jitsu and Women's Wrestling. All experience levels welcome.">
+  <meta property="og:title" content="Harvard Combat Sports Club">
+  <meta property="og:description" content="Combat sports at Harvard: Brazilian Jiu-Jitsu, Women's Wrestling, and more. All experience levels welcome.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-load="schedule">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <span class="kicker">Harvard Club Sports · Est. 2026</span>
+        <h1>Train hard. Train together.</h1>
+        <p class="lede">The Harvard Combat Sports Club is Harvard's student-run home for combat sports, currently Brazilian Jiu-Jitsu and Women's Wrestling, with more on the way. Whether you've never stepped on a mat or you've competed for years, there's a spot for you.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="join.html">Join the club</a>
+          <a class="btn btn-light" href="schedule.html">See the schedule</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div id="announcement" class="announce" role="status" hidden></div>
+        <div id="next-up" class="next-up" aria-live="polite"><span class="label">Next practice</span><strong>Loading…</strong></div>
+        <div class="grid grid-2" id="branch-cards"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Why train with us</div>
+          <h2>Built for beginners, serious about getting better</h2>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 8 9 9 5-1 9-4 9-9V7l-9-5Z"/><path d="m9 12 2 2 4-4"/></svg>
+            <h3>No experience needed</h3>
+            <p>No tryouts, no cuts. Most of our members started from zero. Every practice includes instruction geared to whoever shows up.</p>
+          </div>
+          <div class="card">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.5 1.5-4.5 4-4.5 1 0 2 .3 2.7 1"/></svg>
+            <h3>A real community</h3>
+            <p>Practices, competitions, open mats, team dinners, and a WhatsApp community that's always awake. You'll know everyone by week two.</p>
+          </div>
+          <div class="card">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>
+            <h3>Compete if you want to</h3>
+            <p>We travel to New England tournaments in every discipline we offer. Competing is always optional; supporting your teammates from the sidelines counts too.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">This week</div>
+          <h2>Practice schedule</h2>
+        </div>
+        <div id="schedule-week" class="week"></div>
+        <p style="margin-top:1.5rem"><a class="btn btn-dark" href="schedule.html">Full schedule &amp; locations</a></p>
+      </div>
+    </section>
+
+    <section class="section section-crimson">
+      <div class="wrap">
+        <h2>Ready to train?</h2>
+        <p class="lede">Join the WhatsApp community for practice updates, then show up to any session in athletic clothes and see if it's for you.</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" data-whatsapp href="#">Join the WhatsApp community</a>
+          <a class="btn btn-dark" href="faq.html">Read the FAQ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "_help": "One entry per discipline. The nav, home page cards, footer links, schedule colors, and Instagram links are all generated from this file. To add a sport: (1) add an entry here, (2) copy branch-template.html to <id>.html and fill in the text, (3) add sessions to schedule.json using the same 'branch' name. Set \"active\": false to hide a discipline without deleting it.",
+  "branches": [
+    {
+      "id": "jiu-jitsu",
+      "name": "Brazilian Jiu-Jitsu",
+      "short": "Jiu-Jitsu",
+      "nav": "Jiu-Jitsu",
+      "page": "jiu-jitsu.html",
+      "tagline": "Gi and no-gi training three times a week at the QRAC. Technique, drilling, and live rolling for every level.",
+      "eligibility": "Open to all",
+      "color": "#2a2a2e",
+      "instagram": "hcsc_jiujitsu",
+      "active": true
+    },
+    {
+      "id": "wrestling",
+      "name": "Women's Wrestling",
+      "short": "Women's Wrestling",
+      "nav": "Wrestling",
+      "page": "wrestling.html",
+      "tagline": "Twice-weekly practices in the MAC wrestling room. Founded in 2019 to grow women's wrestling at Harvard and beyond.",
+      "eligibility": "Women only",
+      "color": "#a51c30",
+      "instagram": "hcscwomenswresling",
+      "active": true
+    },
+    {
+      "id": "muay-thai",
+      "name": "Muay Thai",
+      "short": "Muay Thai",
+      "nav": "Muay Thai",
+      "page": "muay-thai.html",
+      "tagline": "Coming soon. Striking fundamentals, pad work, and conditioning.",
+      "eligibility": "Open to all",
+      "color": "#1f4e79",
+      "instagram": "",
+      "active": false
+    }
+  ]
+}
