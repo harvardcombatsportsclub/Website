@@ -36,18 +36,6 @@
       "color": "#1f4e79",
       "tagline": "Coming soon. Striking fundamentals, pad work, and conditioning.",
       "active": false
-    },
-    {
-      "name": "Booty Munching",
-      "short": "BM(I)",
-      "nav": "BM(I)",
-      "id": "bmi",
-      "page": "bmi.html",
-      "eligibility": "Open to all",
-      "instagram": "",
-      "color": "#7a1f6e",
-      "tagline": "stay tooned",
-      "active": false
     }
   ]
 }
