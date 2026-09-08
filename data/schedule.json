@@ -2,7 +2,7 @@
   "term": "Fall 2026",
   "_help": "sessions = the weekly pattern. cancellations = specific dates a session is off (date YYYY-MM-DD, branch, optional note); they drop out of 'Next practice' and are struck through in the week view. announcement = a banner shown on Home and Schedule until the 'until' date (leave text empty to hide).",
   "announcement": {
-    "text": "Jiu-Jitsu practices start Thursday, Sept 10 this week — no practice Tuesday. Wrestling runs as scheduled. Katie sucks!",
+    "text": "Jiu-Jitsu practices start Thursday, Sept 10 this week — no practice Tuesday. Wrestling runs as scheduled.",
     "until": "2026-09-10"
   },
   "cancellations": [
