@@ -8,7 +8,7 @@ Officers use the **Site Editor** at `/admin.html`: forms for the schedule, cance
 
 ## Archived Harvard BJJ site
 
-`legacy/bjj/` preserves the pre-merger Harvard Jiu-Jitsu Club website (original HTML/CSS/images, with an "archived" banner), plus two added tabs, **Past Officers** (`past-officers.html`) and **History & Stories** (`stories.html`). Both read `data/legacy-bjj.json` via `legacy/bjj/legacy.js`. Alumni edit that file through `alumni.html`, which authenticates against the Worker with `ALUMNI_PASSWORD` (a role that can only touch `data/legacy-bjj.json` and `photos/legacy/`). Linked from the Jiu-Jitsu page ("original website") and the footer ("Alumni").
+`legacy/bjj/` preserves the pre-merger Harvard Jiu-Jitsu Club website (original HTML/CSS/images, with an "archived" banner), plus three added tabs, **Past Officers** (`past-officers.html`), **History & Stories** (`stories.html`) and **Photos** (`photos.html`, fed by `data/legacy-photos.json` which `build_photos.py` generates from `photos/legacy/`). Both read `data/legacy-bjj.json` via `legacy/bjj/legacy.js`. Alumni edit that file through `alumni.html`, which authenticates against the Worker with `ALUMNI_PASSWORD` (a role that can only touch `data/legacy-bjj.json` and `photos/legacy/`). Linked from the Jiu-Jitsu page ("original website") and the footer ("Alumni").
 
 ## Editing the JSON directly (what the editor writes)
 

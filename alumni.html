@@ -101,8 +101,8 @@
 
     <!-- PHOTOS -->
     <section class="panel" id="panel-photos" hidden>
-      <h2>Photos for stories</h2>
-      <div class="help"><p>Upload old team photos here, then attach one to a story from the story's "Photo" dropdown. Photos are shrunk automatically.</p></div>
+      <h2>Photos</h2>
+      <div class="help"><p>Old team and tournament photos. Everything uploaded here appears on the archived site's <a href="legacy/bjj/photos.html" target="_blank">Photos page</a> (newest first) about a minute after upload, and can also be attached to a story. Add a short caption if you know when/where it was taken, then click <strong>Save captions</strong>. Photos are shrunk automatically.</p></div>
       <fieldset>
         <legend>Upload</legend>
         <div class="row">
@@ -111,8 +111,13 @@
         </div>
         <p class="muted-box" id="upload-status"></p>
       </fieldset>
-      <fieldset><legend>Uploaded</legend><div class="thumbs" id="legacy-thumbs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.75rem"><span class="muted-box">Loading…</span></div></fieldset>
+      <fieldset>
+        <legend>In the archive gallery <span class="muted-box" id="legacy-count"></span></legend>
+        <div id="legacy-thumbs" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem"><span class="muted-box">Loading…</span></div>
+        <div class="actions"><button class="btn btn-primary" data-save>Save captions</button><span class="muted-box" id="dirty-c"></span></div>
+      </fieldset>
     </section>
+
   </main>
 
   <div class="toast" id="toast" role="status"></div>
@@ -133,6 +138,7 @@
     return { status: r.status, ...j, _list: Array.isArray(j) ? j : null };
   }
   const b64 = s => btoa(unescape(encodeURIComponent(s))), unb64 = s => decodeURIComponent(escape(atob(String(s).replace(/\n/g, ""))));
+  const delFile = (p, sha, m) => call(`/file?path=${encodeURIComponent(p)}`, { method: "DELETE", body: JSON.stringify({ sha, message: m }) });
   const getFile = async p => { const r = await call(`/file?path=${encodeURIComponent(p)}`); return r.status === 404 ? null : r; };
   const putFile = (p, c, m, sha) => call(`/file?path=${encodeURIComponent(p)}`, { method: "PUT", body: JSON.stringify({ content: c, message: m, sha }) });
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -209,6 +215,9 @@
     state.data.boards = $$("#board-list > .board").map(b => ({ year: b.querySelector("[data-f=year]").value.trim(),
       people: $$(".people > .list-item", b).map(vals).filter(p => p.name).map(p => ({ name: p.name, role: p.role, classYear: p.classYear ? +p.classYear : "" })) })).filter(b => b.year);
     state.data.instructors = $$("#instructor-list > .list-item").map(vals).filter(p => p.name).map(p => ({ name: p.name, role: p.role, note: p.note }));
+    const caps = {};
+    $$("#legacy-thumbs [data-cap]").forEach(i => { if (i.value.trim()) caps[i.dataset.cap] = i.value.trim(); });
+    state.data.photoCaptions = caps;
   }
 
   /* ---- photos ---- */
@@ -221,10 +230,22 @@
   const blobB64 = blob => new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result.split(",")[1]); r.readAsDataURL(blob); });
   const slug = s => s.toLowerCase().replace(/\.[a-z0-9]+$/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   async function loadPhotos() {
-    try { const r = await call("/list?dir=photos/legacy"); state.photos = (r._list || []).sort((a, b) => a.name.localeCompare(b.name)); }
+    try { const r = await call("/list?dir=photos/legacy"); state.photos = (r._list || []).sort((a, b) => b.name.localeCompare(a.name)); }
     catch { state.photos = []; }
-    $("#legacy-thumbs").innerHTML = state.photos.length ? state.photos.map(p => `<figure style="margin:0"><img src="${p.download_url}" alt="" loading="lazy" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px"><figcaption class="muted-box" style="font-size:.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.name)}</figcaption></figure>`).join("") : '<span class="muted-box">No photos yet.</span>';
+    const caps = (state.data && state.data.photoCaptions) || {};
+    $("#legacy-count").textContent = state.photos.length ? `· ${state.photos.length}` : "";
+    $("#legacy-thumbs").innerHTML = state.photos.length ? state.photos.map(p => `<figure style="margin:0;position:relative">
+        <img src="${p.download_url}" alt="" loading="lazy" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;display:block">
+        <button type="button" data-del="${esc(p.path)}" data-sha="${p.sha}" title="Delete" style="position:absolute;top:.35rem;right:.35rem;background:rgba(20,20,22,.8);color:#fff;border:0;border-radius:4px;padding:.2rem .5rem;cursor:pointer;font-size:.8rem">Delete</button>
+        <input type="text" data-cap="${esc(p.name)}" value="${esc(caps[p.name] || "")}" placeholder="Caption (e.g. 2015 Boston Open)" style="margin-top:.4rem;font-size:.85rem">
+      </figure>`).join("") : '<span class="muted-box">No photos yet.</span>';
   }
+  $("#legacy-thumbs").addEventListener("click", async e => {
+    const b = e.target.closest("button[data-del]"); if (!b) return;
+    if (!confirm(`Delete ${b.dataset.del.split("/").pop()} from the archive?`)) return;
+    try { await delFile(b.dataset.del, b.dataset.sha, "Remove archive photo via alumni editor"); b.closest("figure").remove(); toast("Deleted. The Photos page updates in about a minute.", "ok"); }
+    catch (err) { if (err.auth) return logout(); toast(err.message, "err"); }
+  });
   async function uploadPhotos() {
     const files = [...$("#photo-files").files]; if (!files.length) return toast("Choose some photos first.", "err");
     const st = $("#upload-status"); let done = 0;
@@ -233,7 +254,7 @@
         await putFile(`photos/legacy/${name}`, await blobB64(await shrink(f)), `Add archive photo ${name}`); done++; }
       catch (e) { if (e.auth) return logout(); toast(e.message, "err"); }
     }
-    st.textContent = `Uploaded ${done} of ${files.length}. Attach them to a story from the story's Photo dropdown.`; $("#photo-files").value = "";
+    st.textContent = `Uploaded ${done} of ${files.length}. They'll appear on the Photos page in about a minute; add captions below if you like.`; $("#photo-files").value = "";
     collect(); await loadPhotos(); render();
   }
 
@@ -247,12 +268,17 @@
   window.addEventListener("beforeunload", e => { if (state.dirty) { e.preventDefault(); e.returnValue = ""; } });
   $("#login-form").addEventListener("submit", async e => {
     e.preventDefault(); $("#login-err").textContent = ""; $("#btn-login").disabled = true;
-    if (!state.editor) { $("#login-err").textContent = "The editor backend isn't configured yet. Ask the club officers."; $("#btn-login").disabled = false; return; }
+    if (!state.editor) await findEditor();
+    if (!state.editor) { $("#login-err").textContent = "Couldn't find the editor backend address. Reload the page and try again; if it keeps happening, ask the club officers."; $("#btn-login").disabled = false; return; }
     try { await login($("#pw").value, $("#remember").checked); } catch (err) { $("#login-err").textContent = err.auth ? "Wrong password." : `Can't reach the editor backend: ${err.message}`; }
     $("#btn-login").disabled = false;
   });
+  async function findEditor() {
+    try { const s = await (await fetch("data/site.json?t=" + Date.now(), { cache: "no-store" })).json(); if (s.editor) { state.editor = s.editor; try { localStorage.setItem("hcsc-editor", s.editor); } catch {} } } catch {}
+    if (!state.editor) { try { state.editor = localStorage.getItem("hcsc-editor") || ""; } catch {} }
+  }
   (async () => {
-    try { const s = await (await fetch("data/site.json", { cache: "no-cache" })).json(); state.editor = s.editor || ""; } catch {}
+    await findEditor();
     let saved = ""; try { saved = localStorage.getItem("hcsc-alumni-pw") || sessionStorage.getItem("hcsc-alumni-pw") || ""; } catch {}
     if (saved && state.editor) { try { await login(saved, !!localStorage.getItem("hcsc-alumni-pw")); } catch { logout(); } }
   })();
