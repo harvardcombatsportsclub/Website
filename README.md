@@ -6,6 +6,10 @@ Static site for HCSC (Brazilian Jiu-Jitsu + Women's Wrestling). No build step, n
 
 Officers use the **Site Editor** at `/admin.html`: forms for the schedule, cancellations/announcements, leadership, disciplines, club info, photos, and the logo. It authenticates with a club password against a small **Cloudflare Worker** (`worker/worker.js`) which holds a GitHub token and commits to this repo on the editor's behalf; the Worker whitelists exactly which paths may be read/written/deleted (see the top of the file). Setup: `worker/README.md`. Photos can also be dragged into `photos/` on github.com. Plain-English officer guide: `GUIDE.md` (served at `/guide.html`). First-time setup: `SETUP.md`.
 
+## Archived Harvard BJJ site
+
+`legacy/bjj/` preserves the pre-merger Harvard Jiu-Jitsu Club website (original HTML/CSS/images, with an "archived" banner), plus two added tabs, **Past Officers** (`past-officers.html`) and **History & Stories** (`stories.html`). Both read `data/legacy-bjj.json` via `legacy/bjj/legacy.js`. Alumni edit that file through `alumni.html`, which authenticates against the Worker with `ALUMNI_PASSWORD` (a role that can only touch `data/legacy-bjj.json` and `photos/legacy/`). Linked from the Jiu-Jitsu page ("original website") and the footer ("Alumni").
+
 ## Editing the JSON directly (what the editor writes)
 
 | To change…                      | Edit this file                          |

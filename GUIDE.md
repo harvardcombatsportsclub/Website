@@ -81,6 +81,12 @@ Now write the page: on GitHub (section 7) open `muay-thai.html` and replace each
 
 There's already a hidden Muay Thai entry to use as a starting point.
 
+## 8b. The archived Harvard BJJ site and alumni
+
+Before 2026 the Jiu-Jitsu branch was its own club with its own website. That site is preserved at `legacy/bjj/` (linked quietly from the bottom of the Jiu-Jitsu page) with two extra tabs in its menu: **Past Officers** and **Stories**.
+
+Alumni can add to both through a separate, smaller editor at `/alumni.html` (linked as "Alumni" in the footer). It uses its own **alumni password**, which only unlocks the archive: alumni can't touch the schedule, current leadership, or anything else on the live site. Officers' password works there too. Share the alumni password in the alumni group chat; change it in Cloudflare (`ALUMNI_PASSWORD`) if it spreads too far. Anything posted there is public, so the usual rule applies: only name people who'd be happy to be named.
+
 ## 9. The shield, the name, and Harvard's rules
 
 The site must make clear we're a *student* organization. The footer on every page already says so and includes Harvard's trademark line. Don't remove it. Other rules from the Trademark Program and the Club Sports Office:
