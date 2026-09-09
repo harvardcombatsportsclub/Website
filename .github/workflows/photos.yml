@@ -9,6 +9,7 @@ on:
     paths:
       - "photos/**"
       - "!photos/people/**"
+      - "!photos/legacy/**"
       - "scripts/build_photos.py"
   workflow_dispatch:
 
