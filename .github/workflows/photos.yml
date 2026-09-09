@@ -9,7 +9,6 @@ on:
     paths:
       - "photos/**"
       - "!photos/people/**"
-      - "!photos/legacy/**"
       - "scripts/build_photos.py"
   workflow_dispatch:
 
@@ -38,7 +37,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A photos data/photos.json
+          git add -A photos data/photos.json data/legacy-photos.json
           if git diff --cached --quiet; then echo "Gallery unchanged"; exit 0; fi
           git commit -m "Rebuild photo gallery"
           # The editor may have pushed other commits meanwhile: rebase and retry a few times
