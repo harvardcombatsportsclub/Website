@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History & Stories | Harvard BJJ</title>
+    <meta name="robots" content="noindex">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="nav-container scrolled">
+        <nav class="nav">
+            <div class="nav-logo">
+                <a href="index.html"><img src="images/harvardbjj_logo.png" alt="Harvard BJJ"></a>
+            </div>
+            <div class="nav-links">
+                <a href="index.html#about">About</a>
+                <a href="index.html#schedule">Schedule</a>
+                <a href="index.html#join">What to Expect</a>
+                <a href="index.html#leadership">Leadership</a>
+                <a href="past-officers.html">Past Officers</a>
+                <a href="stories.html">Stories</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </nav>
+    </div>
+
+    <section id="stories-section" class="animate subpage">
+        <h2>History &amp; Stories</h2>
+        <p class="section-note">Memories from Harvard Jiu Jitsu Club alumni, in their own words. <span id="story-count"></span> Have one to add? Use the <a href="../../alumni.html">Alumni login</a>.</p>
+        <div class="stories-wrap" id="stories"><p>Loading…</p></div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html#about">About</a></li>
+                    <li><a href="index.html#schedule">Schedule</a></li>
+                    <li><a href="index.html#join">What to Expect</a></li>
+                    <li><a href="index.html#leadership">Leadership</a></li>
+                    <li><a href="past-officers.html">Past Officers</a></li>
+                    <li><a href="stories.html">Stories</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Location</h4>
+                <p>Quadrangle Recreational Athletic Center</p>
+                <p>Harvard University</p>
+                <p>Cambridge, MA</p>
+                <p class="location-link"><a href="https://maps.app.goo.gl/nv3QBQW1RaYWfasa6" target="_blank"><i class="fas fa-map-marker-alt"></i> View on Map</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/harvardbjj/" target="_blank" class="social-link"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://www.facebook.com/harvardbjj/" target="_blank" class="social-link"><i class="fab fa-facebook-f"></i> Facebook</a>
+                    <a href="https://www.youtube.com/channel/UCHarvardBJJ" target="_blank" class="social-link"><i class="fab fa-youtube"></i> YouTube</a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>The Harvard Jiu Jitsu Club is a student-run club sport organization at Harvard University. The Harvard name and/or shield are trademarks of the President and Fellows of Harvard College and are used by permission of Harvard University.</p>
+            <p class="footer-links">This page is preserved as it was in 2025. The club is now the Jiu-Jitsu branch of the <a href="../../index.html">Harvard Combat Sports Club</a> · <a href="../../alumni.html">Alumni login</a></p>
+        </div>
+    </footer>
+    <script src="legacy.js"></script>
+    <script>
+        const observer = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && e.target.classList.add('animate')), { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(s => observer.observe(s));
+    </script>
+</body>
+</html>
