@@ -122,7 +122,7 @@
         </div>
         <div class="disclaimer">
           <p><strong>${site.name}</strong> is an officially recognized student organization of Harvard College and a student-run club sport. Our activities are student activities and not activities of Harvard College or Harvard University. The Harvard name and shield are trademarks of the President and Fellows of Harvard College and are used by permission of Harvard University.</p>
-          <p>&copy; ${year} ${site.name} · <a href="admin.html">Officers</a></p>
+          <p>&copy; ${year} ${site.name} · <a href="admin.html">Officers</a> · <a href="alumni.html">Alumni</a></p>
         </div>
       </div>`;
     document.body.append(footer);
