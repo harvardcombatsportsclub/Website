@@ -26,12 +26,23 @@ ROOT = Path(__file__).resolve().parents[1]
 PHOTOS = ROOT / "photos"
 THUMBS = PHOTOS / "thumbs"
 OUT = ROOT / "data" / "photos.json"
+# The archived Harvard BJJ site has its own gallery, fed by alumni uploads
+GALLERIES = [
+    (PHOTOS, THUMBS, OUT, "photos"),
+    (PHOTOS / "legacy", PHOTOS / "legacy" / "thumbs", ROOT / "data" / "legacy-photos.json", "photos/legacy"),
+]
 EXTS = {".jpg", ".jpeg", ".png", ".webp"}
 THUMB_SIZE = 600      # px, longest side of the square-cropped thumbnail
 FULL_MAX = 2000       # px, longest side; larger originals are downscaled in place
 
 
 def main() -> None:
+    for src, thumbs, out, prefix in GALLERIES:
+        if src.exists():
+            build(src, thumbs, out, prefix)
+
+
+def build(PHOTOS: Path, THUMBS: Path, OUT: Path, PREFIX: str) -> None:
     THUMBS.mkdir(parents=True, exist_ok=True)
     files = sorted(
         (p for p in PHOTOS.iterdir() if p.is_file() and p.suffix.lower() in EXTS),
@@ -55,8 +66,8 @@ def main() -> None:
             print(f"skip {p.name}: {e}", file=sys.stderr)
             continue
         photos.append({
-            "full": f"photos/{p.name}",
-            "thumb": f"photos/thumbs/{tpath.name}",
+            "full": f"{PREFIX}/{p.name}",
+            "thumb": f"{PREFIX}/thumbs/{tpath.name}",
             "w": w, "h": h,
         })
 
