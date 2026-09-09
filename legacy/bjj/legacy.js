@@ -44,5 +44,27 @@
           <div class="story-body">${paras(s.body)}</div>
         </article>`).join("") : "<p>No stories yet. Be the first to add one.</p>";
     }
+
+    // ---- Photos (photos.html): list comes from data/legacy-photos.json, captions from this file
+    const gal = document.getElementById("legacy-gallery");
+    if (gal) {
+      fetch("../../data/legacy-photos.json", { cache: "no-cache" }).then(r => r.json()).then(pj => {
+        const caps = data.photoCaptions || {};
+        const photos = (pj.photos || []).slice().reverse().map(p => ({ ...p, caption: caps[p.full.split("/").pop()] || "" }));
+        const count = document.getElementById("legacy-photo-count");
+        if (count) count.textContent = photos.length ? `${photos.length} photo${photos.length === 1 ? "" : "s"}.` : "";
+        if (!photos.length) { gal.innerHTML = "<p>No photos yet. Be the first to add some.</p>"; return; }
+        gal.innerHTML = photos.map((p, i) => `<figure data-i="${i}"><img src="../../${esc(p.thumb || p.full)}" alt="${esc(p.caption)}" loading="lazy"><figcaption>${esc(p.caption)}</figcaption></figure>`).join("");
+        const lb = document.getElementById("lightbox"), img = lb.querySelector("img"), cap = lb.querySelector("figcaption");
+        let idx = 0;
+        const show = i => { idx = (i + photos.length) % photos.length; img.src = "../../" + photos[idx].full; cap.textContent = photos[idx].caption; lb.hidden = false; };
+        gal.addEventListener("click", e => { const f = e.target.closest("figure"); if (f) show(+f.dataset.i); });
+        lb.querySelector(".lb-close").onclick = () => lb.hidden = true;
+        lb.querySelector(".lb-prev").onclick = () => show(idx - 1);
+        lb.querySelector(".lb-next").onclick = () => show(idx + 1);
+        lb.addEventListener("click", e => { if (e.target === lb) lb.hidden = true; });
+        document.addEventListener("keydown", e => { if (lb.hidden) return; if (e.key === "Escape") lb.hidden = true; if (e.key === "ArrowLeft") show(idx - 1); if (e.key === "ArrowRight") show(idx + 1); });
+      }).catch(err => console.error(err));
+    }
   }).catch(err => console.error(err));
 })();

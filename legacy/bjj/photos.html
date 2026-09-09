@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Past Officers | Harvard BJJ</title>
+    <title>Photos | Harvard BJJ</title>
     <meta name="robots" content="noindex">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -29,15 +29,18 @@
         </nav>
     </div>
 
-    <section id="past-officers" class="animate subpage">
-        <h2>Past Officers</h2>
-        <p class="section-note">Boards of the Harvard Jiu Jitsu Club through the years. Alumni can add or correct entries with the <a href="../../alumni.html">Alumni login</a>.</p>
-        <div id="past-boards" class="leadership-grid"><p>Loading…</p></div>
-        <div id="past-instructors-wrap" hidden>
-            <h3 class="sub-h">Instructors</h3>
-            <div id="past-instructors" class="leadership-row instructors-row"></div>
-        </div>
+    <section id="photos-section" class="animate subpage">
+        <h2>Photos</h2>
+        <p class="section-note">Old team photos from Harvard Jiu Jitsu Club alumni. <span id="legacy-photo-count"></span> Have some? Upload them with the <a href="../../alumni.html">Alumni login</a>.</p>
+        <div class="legacy-gallery" id="legacy-gallery"><p>Loading…</p></div>
     </section>
+
+    <div class="lightbox" id="lightbox" hidden>
+        <button class="lb-close" aria-label="Close">×</button>
+        <button class="lb-prev" aria-label="Previous">‹</button>
+        <figure><img alt=""><figcaption></figcaption></figure>
+        <button class="lb-next" aria-label="Next">›</button>
+    </div>
 
     <footer>
         <div class="footer-content">
