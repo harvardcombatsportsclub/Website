@@ -20,6 +20,7 @@ The Site Editor (`admin.html`) needs a tiny program running on Cloudflare that h
    |--------|-------------------|-------|
    | Secret | `ADMIN_PASSWORD`  | The club password officers will type. Make it long-ish and memorable, e.g. a short phrase. |
    | Secret | `GITHUB_TOKEN`    | The `ghp_…` token from step A. |
+   | Secret | `ALUMNI_PASSWORD` | Optional. A second password for alumni; it only unlocks the archived Harvard BJJ pages (past officers, stories) via `alumni.html`. |
    | Text   | `GITHUB_REPO`     | `harvardcombatsports/website` (your GitHub account/repo names) |
    | Text   | `ALLOWED_ORIGINS` | Your site address(es) without a trailing slash, comma-separated, e.g. `https://harvardcombatsports.github.io,https://www.hcsc.club` |
 
@@ -35,6 +36,10 @@ A minute later, open `your-site/admin.html`, type the club password, and you're 
 ## Changing the password (at each hand-off)
 
 Cloudflare → Workers & Pages → `hcsc-editor` → Settings → Variables and Secrets → edit `ADMIN_PASSWORD` → Deploy. Tell the new e-board the new password. That's it.
+
+## Alumni access
+
+`alumni.html` is a separate, smaller editor for the archived Harvard Jiu-Jitsu Club pages (`legacy/bjj/`). Alumni log in with `ALUMNI_PASSWORD` and can only change `data/legacy-bjj.json` (past boards, stories) and upload photos to `photos/legacy/`. They cannot touch the schedule, current leadership, or anything else. Officers' `ADMIN_PASSWORD` also works there. Share the alumni password with trusted alumni (e.g. in the alumni group chat) and change it if it spreads too far.
 
 ## What the Worker can and can't do
 

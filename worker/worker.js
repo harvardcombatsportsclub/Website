@@ -7,6 +7,7 @@
  *
  * Settings (Cloudflare dashboard → Worker → Settings → Variables and Secrets):
  *   ADMIN_PASSWORD   secret   the club password officers type into the editor
+ *   ALUMNI_PASSWORD  secret   optional; lets alumni edit only the archived-BJJ data (alumni.html)
  *   GITHUB_TOKEN     secret   classic token from the club GitHub account, scope "public_repo", no expiration
  *   GITHUB_REPO      text     owner/repo, e.g. harvardcombatsports/website
  *   ALLOWED_ORIGINS  text     comma-separated site origins allowed to call this, e.g.
@@ -15,7 +16,7 @@
  *
  * Endpoints (all need header  Authorization: Bearer <password>  except "/"):
  *   GET    /                      health check, no auth
- *   GET    /auth                  200 if the password is right
+ *   GET    /auth                  200 + { role: "admin" | "alumni" } if the password is right
  *   GET    /file?path=…           { sha, content(base64) }  or 404
  *   PUT    /file?path=…           body { content(base64), message, sha? }  → GitHub response
  *   DELETE /file?path=…           body { sha, message }
@@ -31,20 +32,28 @@ const RULES = {
     /^data\/[a-z-]+\.json$/,
     /^branch-template\.html$/,
     /^[a-z0-9-]+\.html$/,
-    /^photos\/(people\/)?[^/]+\.(jpe?g|png|webp)$/i,
+    /^photos\/(people\/|legacy\/)?[^/]+\.(jpe?g|png|webp)$/i,
     /^assets\/(logo|shield)\.(png|svg|jpe?g)$/,
   ],
   write: [
-    /^data\/(schedule|leadership|branches|site)\.json$/,
+    /^data\/(schedule|leadership|branches|site|legacy-bjj)\.json$/,
     /^photos\/[a-z0-9._-]+\.(jpe?g|png|webp)$/i,
     /^photos\/people\/[a-z0-9._-]+\.(jpe?g|png)$/i,
+    /^photos\/legacy\/[a-z0-9._-]+\.(jpe?g|png|webp)$/i,
     /^assets\/shield\.(png|svg|jpe?g)$/,
     /^[a-z0-9-]+\.html$/,            // new discipline pages (create-only, enforced below)
   ],
   delete: [
-    /^photos\/(people\/)?[a-z0-9._-]+\.(jpe?g|png|webp)$/i,
+    /^photos\/(people\/|legacy\/)?[a-z0-9._-]+\.(jpe?g|png|webp)$/i,
   ],
-  list: [/^photos(\/people)?$/],
+  list: [/^photos(\/people|\/legacy)?$/],
+};
+/* What the alumni password may touch: only the archived-BJJ data and its photos */
+const ALUMNI_RULES = {
+  read: [/^data\/legacy-bjj\.json$/, /^data\/site\.json$/, /^photos\/legacy\/[^/]+\.(jpe?g|png|webp)$/i],
+  write: [/^data\/legacy-bjj\.json$/, /^photos\/legacy\/[a-z0-9._-]+\.(jpe?g|png|webp)$/i],
+  delete: [/^photos\/legacy\/[a-z0-9._-]+\.(jpe?g|png|webp)$/i],
+  list: [/^photos\/legacy$/],
 };
 const PROTECTED_PAGES = new Set(["index", "about", "schedule", "leadership", "faq", "photos", "join", "404", "admin", "guide", "branch-template"]);
 
@@ -59,11 +68,15 @@ export default {
 
     // ---- password check
     const supplied = (request.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
-    if (!env.ADMIN_PASSWORD || !supplied || !(await safeEqual(supplied, env.ADMIN_PASSWORD))) {
+    let role = null;
+    if (supplied && env.ADMIN_PASSWORD && await safeEqual(supplied, env.ADMIN_PASSWORD)) role = "admin";
+    else if (supplied && env.ALUMNI_PASSWORD && await safeEqual(supplied, env.ALUMNI_PASSWORD)) role = "alumni";
+    if (!role) {
       await new Promise(r => setTimeout(r, 400)); // slow down guessing
       return json({ error: "Wrong password" }, 401, cors);
     }
-    if (url.pathname === "/auth") return json({ ok: true }, 200, cors);
+    const R = role === "admin" ? RULES : ALUMNI_RULES;
+    if (url.pathname === "/auth") return json({ ok: true, role }, 200, cors);
 
     if (!env.GITHUB_TOKEN || !env.GITHUB_REPO) return json({ error: "Worker is missing GITHUB_TOKEN or GITHUB_REPO settings" }, 500, cors);
     const branch = env.GITHUB_BRANCH || "main";
@@ -82,7 +95,7 @@ export default {
       // ---- list a folder
       if (url.pathname === "/list" && request.method === "GET") {
         const dir = url.searchParams.get("dir") || "";
-        if (!allowed(RULES.list, dir)) return json({ error: "Not allowed" }, 403, cors);
+        if (!allowed(R.list, dir)) return json({ error: "Not allowed" }, 403, cors);
         const r = await gh(`${dir}?ref=${branch}&t=${Date.now()}`);
         if (r.status === 404) return json([], 200, cors);
         const items = await r.json();
@@ -96,7 +109,7 @@ export default {
         if (path.includes("..")) return json({ error: "Bad path" }, 400, cors);
 
         if (request.method === "GET") {
-          if (!allowed(RULES.read, path)) return json({ error: "Not allowed" }, 403, cors);
+          if (!allowed(R.read, path)) return json({ error: "Not allowed" }, 403, cors);
           const r = await gh(`${path}?ref=${branch}&t=${Date.now()}`);
           if (r.status === 404) return json({ error: "Not found" }, 404, cors);
           const j = await r.json();
@@ -104,7 +117,7 @@ export default {
         }
 
         if (request.method === "PUT") {
-          if (!allowed(RULES.write, path)) return json({ error: "Not allowed" }, 403, cors);
+          if (!allowed(R.write, path)) return json({ error: "Not allowed" }, 403, cors);
           const body = await request.json().catch(() => ({}));
           if (typeof body.content !== "string") return json({ error: "Missing content" }, 400, cors);
           if (body.content.length > 12 * 1024 * 1024) return json({ error: "File too large (max ~9 MB)" }, 413, cors);
@@ -124,7 +137,7 @@ export default {
         }
 
         if (request.method === "DELETE") {
-          if (!allowed(RULES.delete, path)) return json({ error: "Not allowed" }, 403, cors);
+          if (!allowed(R.delete, path)) return json({ error: "Not allowed" }, 403, cors);
           const body = await request.json().catch(() => ({}));
           if (!body.sha) return json({ error: "Missing sha" }, 400, cors);
           const r = await gh(path, { method: "DELETE", body: JSON.stringify({ message: String(body.message || `Delete ${path} via site editor`).slice(0, 200), sha: body.sha, branch }) });
