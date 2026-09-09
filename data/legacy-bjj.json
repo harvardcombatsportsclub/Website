@@ -1,0 +1,32 @@
+{
+  "_help": "Content for the archived Harvard Jiu-Jitsu Club pages (legacy/bjj/). Edited by alumni through alumni.html. 'boards' is one entry per academic year, newest first. 'stories' are shown newest first; 'body' may contain blank lines for paragraphs.",
+  "boards": [
+    {
+      "year": "2024–25",
+      "people": [
+        { "name": "Jon Syla", "role": "Co-President", "classYear": 2025 },
+        { "name": "Kylie Hunts-in-Winter", "role": "Co-President", "classYear": 2025 },
+        { "name": "Joel Bentley", "role": "Financial Manager", "classYear": 2027 },
+        { "name": "Andrew Lim", "role": "Competition and Training Manager", "classYear": 2025 },
+        { "name": "Matteo Burnett", "role": "Assistant Competition and Training Manager", "classYear": 2028 },
+        { "name": "Tommy Seneker", "role": "Sponsorships and Relationship Manager", "classYear": 2027 },
+        { "name": "Joseph Fadule", "role": "Gear and Apparel Manager", "classYear": 2026 },
+        { "name": "Colin Zou", "role": "Events & Social Media Manager", "classYear": 2026 }
+      ]
+    }
+  ],
+  "instructors": [
+    { "name": "Ruan Oliveira", "role": "Head Instructor", "note": "Black Belt" },
+    { "name": "Herb Chao", "role": "Instructor", "note": "Brown Belt" }
+  ],
+  "stories": [
+    {
+      "title": "Two clubs become one",
+      "author": "HCSC E-Board",
+      "classYear": "",
+      "date": "2026-09",
+      "photo": "",
+      "body": "In fall 2026 the Harvard Jiu-Jitsu Club joined forces with the Harvard Women's Wrestling Club to form the Harvard Combat Sports Club. This page preserves the Jiu-Jitsu Club's own site as it was, and gives alumni a place to add their memories.\n\nIf you trained with the club, we'd love to hear from you: use the Alumni login at the bottom of the page to add a story or fill in a past board."
+    }
+  ]
+}
