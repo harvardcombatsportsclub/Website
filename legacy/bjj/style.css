@@ -667,3 +667,53 @@ footer {
 /* Eight menu items now: keep labels on one line and tighten spacing a little */
 .nav-links a { white-space: nowrap; }
 @media (min-width: 901px) and (max-width: 1400px) { .nav-links { gap: 1rem; } .nav-links a { margin-left: 1.5rem; font-size: 1rem; } }
+
+/* ---- Mobile layout (added for the archived version; desktop is untouched) ---- */
+.nav-toggle { display: none; }
+@media (max-width: 900px) {
+    .nav { padding: .75rem 1.25rem; flex-wrap: wrap; position: relative; }
+    .nav-logo { height: 44px; }
+    .nav-logo img { height: 44px; }
+    .nav-container { background: var(--primary); top: 0; left: 0; } /* solid bar pinned to the top so the menu button is always visible */
+    .nav-links a { color: var(--light); }
+    .nav-toggle {
+        display: inline-flex; align-items: center; gap: .5rem; margin-left: auto;
+        background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.6); border-radius: 6px;
+        padding: .45rem .8rem; font: inherit; font-weight: 600; font-size: .95rem; cursor: pointer;
+    }
+    .nav-links {
+        display: none; flex-direction: column; gap: 0; width: 100%; padding: .5rem 0 .75rem; margin-top: .5rem;
+        border-top: 1px solid rgba(255,255,255,.25);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { margin: 0; padding: .8rem .25rem; font-size: 1.05rem; border-bottom: 1px solid rgba(255,255,255,.12); white-space: normal; }
+    .nav-links a::after { display: none; }
+
+    .hero { flex-direction: column; height: auto; margin-top: 68px; }
+    .hero-image, .hero-image:hover { width: 100%; height: 42vh; }
+    .hero-content, .hero-image:hover + .hero-content { width: 100%; padding: 2rem 1.5rem 2.5rem; }
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1.05rem; }
+
+    section { padding: 3.5rem 1.25rem; }
+    .subpage { padding-top: 6.5rem; }
+    h2 { font-size: 2rem; }
+    .schedule-grid, .join-content { grid-template-columns: 1fr; gap: 1.25rem; }
+    .join-content .card { text-align: left; }
+    .leadership-grid { gap: 2.5rem; }
+    .leadership-row-1, .leadership-row-2, .instructors-row { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .leader-card { padding: 1.25rem .75rem; }
+    .leader-card img { width: 110px; height: 110px; }
+    .leader-card h3 { font-size: 1rem; }
+    .leader-card h4 { font-size: .8rem; }
+    .board-year .leader-card.compact { flex: 1 1 45%; }
+    .stories-wrap, .legacy-gallery { padding: 0; }
+    .story { padding: 1.25rem; }
+    footer { padding: 2.5rem 1.25rem 1.5rem; }
+    .footer-content { grid-template-columns: 1fr; gap: 2rem; }
+}
+@media (max-width: 480px) {
+    .leadership-row-1, .leadership-row-2, .instructors-row { grid-template-columns: 1fr; }
+    .board-year .leader-card.compact { flex: 1 1 100%; }
+    .hero h1 { font-size: 1.9rem; }
+}

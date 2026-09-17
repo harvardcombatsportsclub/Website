@@ -1,6 +1,18 @@
 /* Fills the archived Harvard BJJ pages from ../../data/legacy-bjj.json */
 (function () {
   "use strict";
+
+  // Mobile menu: inject a toggle button into the original nav (no markup changes to the old page)
+  const nav = document.querySelector(".nav"), links = document.querySelector(".nav-links");
+  if (nav && links && !nav.querySelector(".nav-toggle")) {
+    const btn = document.createElement("button");
+    btn.className = "nav-toggle"; btn.type = "button"; btn.setAttribute("aria-expanded", "false"); btn.setAttribute("aria-controls", "legacy-nav-links");
+    btn.innerHTML = 'Menu <span aria-hidden="true">☰</span>';
+    links.id = "legacy-nav-links";
+    nav.insertBefore(btn, links);
+    btn.addEventListener("click", () => { const open = links.classList.toggle("open"); btn.setAttribute("aria-expanded", String(open)); });
+    links.addEventListener("click", e => { if (e.target.closest("a")) { links.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); } });
+  }
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const paras = t => String(t || "").split(/\n\s*\n/).map(p => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
 
