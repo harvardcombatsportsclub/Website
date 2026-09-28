@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Alumni Editor — Harvard Jiu-Jitsu Club archive</title>
   <meta name="robots" content="noindex">
-  <link rel="icon" href="assets/shield.png" type="image/png">
-  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" href="/assets/shield.png" type="image/png">
+  <link rel="stylesheet" href="/assets/style.css">
   <style>
     body { background: var(--paper); }
     .ed-header { background: var(--ink); color: var(--white); border-bottom: 3px solid var(--gold); }
@@ -58,7 +58,7 @@
     <div class="wrap">
       <h1>Alumni Editor · Harvard BJJ archive</h1>
       <div class="status" id="status"></div>
-      <div><a href="legacy/bjj/index.html" target="_blank" rel="noopener">Archived site ↗</a> &nbsp;·&nbsp; <a href="legacy/bjj/stories.html" target="_blank" rel="noopener">Stories ↗</a> <span id="logout-wrap" hidden>&nbsp;·&nbsp; <button class="link" id="btn-logout">Log out</button></span></div>
+      <div><a href="/legacy/bjj/" target="_blank" rel="noopener">Archived site ↗</a> &nbsp;·&nbsp; <a href="/legacy/bjj/stories" target="_blank" rel="noopener">Stories ↗</a> <span id="logout-wrap" hidden>&nbsp;·&nbsp; <button class="link" id="btn-logout">Log out</button></span></div>
     </div>
   </header>
 
@@ -83,7 +83,7 @@
     <!-- STORIES -->
     <section class="panel" id="panel-stories">
       <h2>History &amp; stories</h2>
-      <div class="help"><p>Write in your own voice. Blank lines make paragraphs. Newest stories appear first on the <a href="legacy/bjj/stories.html" target="_blank">Stories page</a>. Please only include people who'd be happy to be named. Anything here is public.</p></div>
+      <div class="help"><p>Write in your own voice. Blank lines make paragraphs. Newest stories appear first on the <a href="/legacy/bjj/stories" target="_blank">Stories page</a>. Please only include people who'd be happy to be named. Anything here is public.</p></div>
       <div id="story-list"></div>
       <button class="btn btn-outline small" id="add-story">+ Add a story</button>
       <div class="actions"><button class="btn btn-primary" data-save>Save to website</button><span class="muted-box" id="dirty-a"></span></div>
@@ -102,7 +102,7 @@
     <!-- PHOTOS -->
     <section class="panel" id="panel-photos" hidden>
       <h2>Photos</h2>
-      <div class="help"><p>Old team and tournament photos. Everything uploaded here appears on the archived site's <a href="legacy/bjj/photos.html" target="_blank">Photos page</a> (newest first) about a minute after upload, and can also be attached to a story. Add a short caption if you know when/where it was taken, then click <strong>Save captions</strong>. Photos are shrunk automatically.</p></div>
+      <div class="help"><p>Old team and tournament photos. Everything uploaded here appears on the archived site's <a href="/legacy/bjj/photos" target="_blank">Photos page</a> (newest first) about a minute after upload, and can also be attached to a story. Add a short caption if you know when/where it was taken, then click <strong>Save captions</strong>. Photos are shrunk automatically.</p></div>
       <fieldset>
         <legend>Upload</legend>
         <div class="row">
@@ -274,7 +274,7 @@
     $("#btn-login").disabled = false;
   });
   async function findEditor() {
-    try { const s = await (await fetch("data/site.json?t=" + Date.now(), { cache: "no-store" })).json(); if (s.editor) { state.editor = s.editor; try { localStorage.setItem("hcsc-editor", s.editor); } catch {} } } catch {}
+    try { const s = await (await fetch("/data/site.json?t=" + Date.now(), { cache: "no-store" })).json(); if (s.editor) { state.editor = s.editor; try { localStorage.setItem("hcsc-editor", s.editor); } catch {} } } catch {}
     if (!state.editor) { try { state.editor = localStorage.getItem("hcsc-editor") || ""; } catch {} }
   }
   (async () => {

@@ -4,7 +4,7 @@ This is the one-time setup. Day-to-day editing is covered in `GUIDE.md`.
 
 ## What's in this folder
 
-- **Pages** — `index.html` (home), `about.html`, `jiu-jitsu.html`, `wrestling.html`, `schedule.html`, `leadership.html`, `faq.html`, `photos.html`, `join.html` (join, dues, donate, contact), `404.html`. `branch-template.html` is not a live page; copy it when adding a new discipline.
+- **Pages** — `index.html` (home), `about.html`, `jiu-jitsu.html`, `wrestling.html`, `schedule.html`, `leadership.html`, `faq.html`, `gallery.html`, `join.html` (join, dues, donate, contact), `404.html`. `branch-template.html` is not a live page; copy it when adding a new discipline.
 - **`assets/`** — `style.css` (design; colors are the first ~15 lines), `site.js` (builds header/nav/footer and fills pages from the data files), `logo.svg` (placeholder — replace with the Club Sports shield).
 - **`admin.html`** — the Site Editor officers use (password-protected via the Cloudflare Worker).
 - **`worker/`** — `worker.js` is the Cloudflare Worker code; `README.md` is its setup guide.

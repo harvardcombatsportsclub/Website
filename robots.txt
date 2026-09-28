@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /admin.html
-Disallow: /alumni.html
-Disallow: /guide.html
+Disallow: /admin
+Disallow: /alumni
+Disallow: /guide
 Disallow: /legacy/
 
 Sitemap: https://www.harvardcombatsportsclub.com/sitemap.xml

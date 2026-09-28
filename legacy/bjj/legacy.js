@@ -16,7 +16,7 @@
   const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const paras = t => String(t || "").split(/\n\s*\n/).map(p => `<p>${esc(p).replace(/\n/g, "<br>")}</p>`).join("");
 
-  fetch("../../data/legacy-bjj.json", { cache: "no-cache" }).then(r => r.json()).then(data => {
+  fetch("/data/legacy-bjj.json", { cache: "no-cache" }).then(r => r.json()).then(data => {
     // ---- Past officers (index.html)
     const boards = document.getElementById("past-boards");
     if (boards) {
@@ -50,7 +50,7 @@
       if (count) count.textContent = `${list.length} ${list.length === 1 ? "story" : "stories"}`;
       stories.innerHTML = list.length ? list.map((s, i) => `
         <article class="story" id="story-${i}">
-          ${s.photo ? `<img class="story-photo" src="../../${esc(s.photo)}" alt="">` : ""}
+          ${s.photo ? `<img class="story-photo" src="/${esc(s.photo)}" alt="">` : ""}
           <h3>${esc(s.title)}</h3>
           <p class="story-meta">${esc(s.author)}${s.classYear ? ` · Class of ${esc(s.classYear)}` : ""}${s.date ? ` · ${esc(s.date)}` : ""}</p>
           <div class="story-body">${paras(s.body)}</div>
@@ -60,16 +60,16 @@
     // ---- Photos (photos.html): list comes from data/legacy-photos.json, captions from this file
     const gal = document.getElementById("legacy-gallery");
     if (gal) {
-      fetch("../../data/legacy-photos.json", { cache: "no-cache" }).then(r => r.json()).then(pj => {
+      fetch("/data/legacy-photos.json", { cache: "no-cache" }).then(r => r.json()).then(pj => {
         const caps = data.photoCaptions || {};
         const photos = (pj.photos || []).slice().reverse().map(p => ({ ...p, caption: caps[p.full.split("/").pop()] || "" }));
         const count = document.getElementById("legacy-photo-count");
         if (count) count.textContent = photos.length ? `${photos.length} photo${photos.length === 1 ? "" : "s"}.` : "";
         if (!photos.length) { gal.innerHTML = "<p>No photos yet. Be the first to add some.</p>"; return; }
-        gal.innerHTML = photos.map((p, i) => `<figure data-i="${i}"><img src="../../${esc(p.thumb || p.full)}" alt="${esc(p.caption)}" loading="lazy"><figcaption>${esc(p.caption)}</figcaption></figure>`).join("");
+        gal.innerHTML = photos.map((p, i) => `<figure data-i="${i}"><img src="/${esc(p.thumb || p.full)}" alt="${esc(p.caption)}" loading="lazy"><figcaption>${esc(p.caption)}</figcaption></figure>`).join("");
         const lb = document.getElementById("lightbox"), img = lb.querySelector("img"), cap = lb.querySelector("figcaption");
         let idx = 0;
-        const show = i => { idx = (i + photos.length) % photos.length; img.src = "../../" + photos[idx].full; cap.textContent = photos[idx].caption; lb.hidden = false; };
+        const show = i => { idx = (i + photos.length) % photos.length; img.src = "/" + photos[idx].full; cap.textContent = photos[idx].caption; lb.hidden = false; };
         gal.addEventListener("click", e => { const f = e.target.closest("figure"); if (f) show(+f.dataset.i); });
         lb.querySelector(".lb-close").onclick = () => lb.hidden = true;
         lb.querySelector(".lb-prev").onclick = () => show(idx - 1);

@@ -9,14 +9,14 @@
   /* Nav order. Discipline pages are inserted where BRANCHES appears,
      generated from data/branches.json. */
   const NAV = [
-    { href: "index.html",      label: "Home" },
-    { href: "about.html",      label: "About" },
+    { href: "/",      label: "Home" },
+    { href: "/about",      label: "About" },
     "BRANCHES",
-    { href: "schedule.html",   label: "Schedule" },
-    { href: "leadership.html", label: "Leadership" },
-    { href: "faq.html",        label: "FAQ" },
-    { href: "photos.html",     label: "Photos" },
-    { href: "join.html",       label: "Join", cta: true }
+    { href: "/schedule",   label: "Schedule" },
+    { href: "/leadership", label: "Leadership" },
+    { href: "/faq",        label: "FAQ" },
+    { href: "/gallery",    label: "Photos" },
+    { href: "/join",       label: "Join", cta: true }
   ];
 
   let BRANCHES = [];            // active disciplines, filled at boot
@@ -25,6 +25,8 @@
   const branchFor = text => BRANCHES.find(b =>
     [b.name, b.short, b.id].some(k => k && k.toLowerCase() === String(text).toLowerCase())
   ) || BRANCHES.find(b => new RegExp(b.short.split(/\s+/).pop(), "i").test(text));
+  /* branches.json stores page files like "muay-thai.html"; links use the clean form "/muay-thai" */
+  const pageHref = page => "/" + String(page).replace(/\.html$/, "");
   const escapeHtml = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   const ICONS = {
@@ -33,9 +35,10 @@
     mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>'
   };
 
+  /* Current page as a clean path: "/", "/schedule", … (works with or without .html) */
   const currentFile = () => {
-    const f = location.pathname.split("/").pop();
-    return f === "" ? "index.html" : f;
+    let f = location.pathname.split("/").pop().replace(/\.html$/, "");
+    return f === "" || f === "index" ? "/" : "/" + f;
   };
 
   async function loadJSON(path) {
@@ -48,12 +51,12 @@
   function renderHeader(site) {
     const cur = currentFile();
     const link = p => `<a href="${p.href}" ${p.cta ? 'class="cta"' : ""} ${p.href === cur ? 'aria-current="page"' : ""}>${p.label}</a>`;
-    const onBranchPage = BRANCHES.some(b => b.page === cur);
+    const onBranchPage = BRANCHES.some(b => pageHref(b.page) === cur);
     const sportsMenu = `<div class="nav-group ${onBranchPage ? "current" : ""}">
         <button class="nav-drop" aria-expanded="false" aria-haspopup="true" aria-controls="sports-menu">Sports <span class="chev" aria-hidden="true">▾</span></button>
         <div class="nav-menu" id="sports-menu" role="menu">
-          ${BRANCHES.map(b => `<a role="menuitem" href="${b.page}" ${b.page === cur ? 'aria-current="page"' : ""}>${escapeHtml(b.nav || b.short)}</a>`).join("")}
-          <a role="menuitem" class="all" href="schedule.html">All practice times →</a>
+          ${BRANCHES.map(b => `<a role="menuitem" href="${pageHref(b.page)}" ${pageHref(b.page) === cur ? 'aria-current="page"' : ""}>${escapeHtml(b.nav || b.short)}</a>`).join("")}
+          <a role="menuitem" class="all" href="/schedule">All practice times →</a>
         </div>
       </div>`;
     const links = NAV.map(p => p === "BRANCHES" ? sportsMenu : link(p)).join("");
@@ -62,8 +65,8 @@
     header.className = "site-header";
     header.innerHTML = `
       <div class="wrap">
-        <a class="brand" href="index.html" aria-label="${site.name} home">
-          <img src="${site.logo || "assets/logo.svg"}" alt="" onerror="this.style.display='none'">
+        <a class="brand" href="/" aria-label="${site.name} home">
+          <img src="/${(site.logo || "assets/logo.svg").replace(/^\//, "")}" alt="" onerror="this.style.display='none'">
           <span class="brand-text">
             <span class="brand-name">${site.short}</span>
             <span class="brand-sub">${site.name}</span>
@@ -106,9 +109,9 @@
           <div>
             <h4>Train</h4>
             <ul>
-              <li><a href="schedule.html">Practice schedule</a></li>
-              ${BRANCHES.map(b => `<li><a href="${b.page}">${b.short}</a></li>`).join("")}
-              <li><a href="faq.html">FAQ</a></li>
+              <li><a href="/schedule">Practice schedule</a></li>
+              ${BRANCHES.map(b => `<li><a href="${pageHref(b.page)}">${b.short}</a></li>`).join("")}
+              <li><a href="/faq">FAQ</a></li>
             </ul>
           </div>
           <div>
@@ -122,7 +125,7 @@
         </div>
         <div class="disclaimer">
           <p><strong>${site.name}</strong> is an officially recognized student organization of Harvard College and a student-run club sport. Our activities are student activities and not activities of Harvard College or Harvard University. The Harvard name and shield are trademarks of the President and Fellows of Harvard College and are used by permission of Harvard University.</p>
-          <p>&copy; ${year} ${site.name} · <a href="admin.html">Officers</a> · <a href="alumni.html">Alumni</a></p>
+          <p>&copy; ${year} ${site.name} · <a href="/admin">Officers</a> · <a href="/alumni">Alumni</a></p>
         </div>
       </div>`;
     document.body.append(footer);
@@ -160,7 +163,7 @@
     const el = document.getElementById("branch-cards");
     if (!el) return;
     el.innerHTML = BRANCHES.map(b => `
-      <a class="branch-card" href="${b.page}" style="--b:${b.color || "#2a2a2e"}">
+      <a class="branch-card" href="${pageHref(b.page)}" style="--b:${b.color || "#2a2a2e"}">
         <span class="tag">${escapeHtml(b.eligibility || "")}</span>
         <h3>${escapeHtml(b.name)}</h3>
         <p>${escapeHtml(b.tagline || "")}</p>
@@ -389,13 +392,13 @@
   document.addEventListener("DOMContentLoaded", async () => {
     let site;
     try {
-      site = await loadJSON("data/site.json");
+      site = await loadJSON("/data/site.json");
     } catch (e) {
       console.error(e);
       site = { name: "Harvard Combat Sports Club", short: "HCSC", email: "", whatsapp: "#" };
     }
     try {
-      const br = await loadJSON("data/branches.json");
+      const br = await loadJSON("/data/branches.json");
       BRANCHES = (br.branches || []).filter(b => b.active !== false);
     } catch (e) { console.error(e); }
 
@@ -411,9 +414,9 @@
 
     const wants = document.body.dataset.load ? document.body.dataset.load.split(/\s+/) : [];
     const jobs = [];
-    if (wants.includes("schedule")) jobs.push(loadJSON("data/schedule.json").then(renderSchedule));
-    if (wants.includes("leadership")) jobs.push(loadJSON("data/leadership.json").then(renderLeadership));
-    if (wants.includes("photos")) jobs.push(loadJSON("data/photos.json").then(renderGallery));
+    if (wants.includes("schedule")) jobs.push(loadJSON("/data/schedule.json").then(renderSchedule));
+    if (wants.includes("leadership")) jobs.push(loadJSON("/data/leadership.json").then(renderLeadership));
+    if (wants.includes("photos")) jobs.push(loadJSON("/data/photos.json").then(renderGallery));
     await Promise.allSettled(jobs).then(results => results.forEach(r => r.status === "rejected" && console.error(r.reason)));
   });
 })();

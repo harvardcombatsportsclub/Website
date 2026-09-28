@@ -55,7 +55,7 @@ const ALUMNI_RULES = {
   delete: [/^photos\/legacy\/[a-z0-9._-]+\.(jpe?g|png|webp)$/i],
   list: [/^photos\/legacy$/],
 };
-const PROTECTED_PAGES = new Set(["index", "about", "schedule", "leadership", "faq", "photos", "join", "404", "admin", "guide", "branch-template"]);
+const PROTECTED_PAGES = new Set(["index", "about", "schedule", "leadership", "faq", "gallery", "join", "404", "admin", "guide", "branch-template"]);
 
 export default {
   async fetch(request, env) {
