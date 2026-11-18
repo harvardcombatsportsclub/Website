@@ -2,14 +2,34 @@
   "term": "Fall 2026",
   "_help": "sessions = the weekly pattern. cancellations = specific dates a session is off (date YYYY-MM-DD, branch, optional note); they drop out of 'Next practice' and are struck through in the week view. announcement = a banner shown on Home and Schedule until the 'until' date (leave text empty to hide).",
   "announcement": {
-    "text": "This Saturday's practice will be at 1:00-2:30 pm instead of 12pm due to facility closures. Regular schedule will resume next week!",
-    "until": "2026-10-04"
+    "text": "There will be no practice on Saturday, 11/21/2026 dure to the Harvard-Yale football game.\n\nThere will also be no practices from Wednesday, 11/25/2026, to Sunday, 11/29/2026.",
+    "until": "2026-11-29"
   },
   "cancellations": [
     {
-      "date": "2026-09-08",
+      "date": "2026-11-21",
       "branch": "Jiu-Jitsu",
-      "note": "First BJJ practice of the semester is Thursday"
+      "note": "Harvard Yale game"
+    },
+    {
+      "date": "2026-11-25",
+      "note": "Thanksgiving Break"
+    },
+    {
+      "date": "2026-11-26",
+      "note": "Thanksgiving Break"
+    },
+    {
+      "date": "2026-11-27",
+      "note": "Thanksgiving Break"
+    },
+    {
+      "date": "2026-11-28",
+      "note": "Thanksgiving Break"
+    },
+    {
+      "date": "2026-11-29",
+      "note": "Thanksgiving Break"
     }
   ],
   "notes": [
